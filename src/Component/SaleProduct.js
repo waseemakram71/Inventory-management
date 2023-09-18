@@ -7,6 +7,8 @@ import {
   serverTimestamp,
   query,
   where,
+  updateDoc,
+  doc, // Import the updateDoc and doc functions
 } from 'firebase/firestore';
 
 function SaleProduct() {
@@ -19,6 +21,7 @@ function SaleProduct() {
   const [date, setDate] = useState('');
   const [products, setProducts] = useState([]);
   const [availableQuantity, setAvailableQuantity] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null); // Store the selected product
 
   // Fetch products from Firestore
   useEffect(() => {
@@ -39,12 +42,13 @@ function SaleProduct() {
     fetchProducts();
   }, []);
 
-  // Update price and available quantity when the product name changes
+  // Update price, available quantity, and selected product when the product name changes
   useEffect(() => {
     const selectedProduct = products.find((product) => product.name === productName);
     if (selectedProduct) {
       setPrice(selectedProduct.price || 0);
       setAvailableQuantity(selectedProduct.quantity || 0);
+      setSelectedProduct(selectedProduct); // Store the selected product
     }
   }, [productName, products]);
 
@@ -84,6 +88,12 @@ function SaleProduct() {
         price: parseFloat(price),
         totalPrice,
         date: formatDate(date),
+      });
+
+      // Deduct sold quantity from the product list in Firestore
+      const productRef = doc(db, 'ProductData', selectedProduct.id);
+      await updateDoc(productRef, {
+        quantity: availableQuantity - saleQuantity,
       });
 
       // Reset form fields

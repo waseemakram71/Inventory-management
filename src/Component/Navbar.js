@@ -16,16 +16,16 @@ const Navbar = ({ loggedIn }) => {
   };
 
   return (
-    <nav style={{ display: 'flex', width: '100%', justifyContent: 'space-around', alignItems: 'center', background: '#223344' }}>
+    <nav className='nav'>
       <div>
-        <p style={{ fontWeight: 1000, color: 'white', width: 'auto', margin: 'auto' }}>
-          Inventory <span style={{ color: 'orange', fontStyle: 'italic' }}> Management System</span>
+        <p className='paragraph'>
+          Inventory <span className='logo'> Management System</span>
         </p>
       </div>
 
 
 
-      <ul style={{ display: 'flex', listStyle: 'none', gap: '40px', textDecoration: 'none', alignItems: 'center' }}>
+      <ul className='ul'>
         <li>
           <NavLink className="nav-bar-link" to="/">
             Home
