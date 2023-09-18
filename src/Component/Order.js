@@ -32,7 +32,7 @@ function Order() {
 
   return (
     <div>
-      <h1>Your orders</h1>
+      <h2> Orders</h2>
       <table>
         <thead>
           <tr>
